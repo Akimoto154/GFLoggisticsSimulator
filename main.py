@@ -27,7 +27,7 @@ def load_tasks_from_csv(file_path):
     return tasks
 
 def generate_combinations(tasks, max_tasks=4):
-    """生成所有可能的任务组合"""
+    """生成所有可能的、长度为 ``max_tasks`` 的任务组合"""
     return itertools.combinations(tasks, max_tasks)
 
 def calculate_resources(combination):
@@ -45,7 +45,7 @@ def optimize_tasks(combinations, weights):
     for combination in combinations:
         total_manpower, total_ammo, total_food, total_parts = calculate_resources(combination)
 
-        # 计算加权偏差
+        # 计算加权得分
         value = (
             total_manpower * weights['manpower'] +
             total_ammo * weights['ammo'] +
@@ -55,7 +55,7 @@ def optimize_tasks(combinations, weights):
 
         best_combinations.append((combination, value))
 
-    # 按加权偏差排序并取前五个组合
+    # 按加权得分排序并取前五个组合
     best_combinations.sort(key=lambda x: x[1], reverse=True)
     return best_combinations[:5]
 
